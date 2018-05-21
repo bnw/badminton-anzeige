@@ -7,7 +7,8 @@ function delay(ms: number) {
 // Expose a singleton WebSocket connection to ShareDB server
 export function get_sharedb_connection() {
     return new Promise<sharedb.Connection>(resolve => {
-        const socket = new WebSocket('ws://localhost:8080');
+        const server = location.host || 'localhost:8080';
+        const socket = new WebSocket('ws://' + server);
         let has_been_open: boolean = false;
         socket.onerror = function (event) {
             if (!has_been_open) {
