@@ -5,3 +5,9 @@ export type Data = {
     team_b: { score: number, name: string },
     sets: Set[]
 }
+
+export const initial_data: Data = {
+    team_a: {score: 0, name: "Heim"},
+    team_b: {score: 0, name: "Gast"},
+    sets: []
+};

@@ -19,6 +19,7 @@
     "ws": "^5.1.1"
   },
   "scripts": {
-    "run": "webpack && ts-node src/server.ts"
+    "build": "webpack",
+    "run": "ts-node src/server.ts"
   }
 }

@@ -5,66 +5,84 @@
     <meta charset="UTF-8">
     <title>Anzeige Fernbedienung</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="spinner.css">
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
     <link rel="stylesheet/less" type="text/css" href="controller.less">
     <script async="async" src="../node_modules/less/dist/less.js" type="text/javascript"></script>
 </head>
 <body>
 <div id="app">
-    <div class="score">{{team_a.score}} : {{team_b.score}}</div>
-    <div class="score-buttons">
-        <div class="team_a">
-            <button type="button" class="btn btn-secondary" v-on:click="change_score('team_a', -1)" v-bind:class="{ invisible: team_a.score==0 }">-1</button>
-            <button type="button" class="btn btn-primary btn-lg btn-huge" v-on:click="change_score('team_a', 1)">+1</button>
+    <div v-if="is_loading">
+        <div id="floatingCirclesG">
+            <div class="f_circleG" id="frotateG_01"></div>
+            <div class="f_circleG" id="frotateG_02"></div>
+            <div class="f_circleG" id="frotateG_03"></div>
+            <div class="f_circleG" id="frotateG_04"></div>
+            <div class="f_circleG" id="frotateG_05"></div>
+            <div class="f_circleG" id="frotateG_06"></div>
+            <div class="f_circleG" id="frotateG_07"></div>
+            <div class="f_circleG" id="frotateG_08"></div>
         </div>
-        <div class="team_b">
-            <button type="button" class="btn btn-primary btn-lg btn-huge" v-on:click="change_score('team_b', 1)">+1</button>
-            <button type="button" class="btn btn-secondary" v-on:click="change_score('team_b', -1)" v-bind:class="{ invisible: team_b.score==0 }">-1</button>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <div class="next-set mt-3">
-        <button type="button"
-                class="btn btn-warning btn-lg"
-                v-bind:class="{ invisible: hide_next_set(), disabled: !is_set_finished() }"
-                v-on:click="start_next_set()">
-            Nächster Satz
-        </button>
     </div>
 
-    <div class=" names mt-3
+    <div v-if="!is_loading">
+        <div class="score">{{team_a.score}} : {{team_b.score}}</div>
+        <div class="score-buttons">
+            <div class="team_a">
+                <button type="button" class="btn btn-secondary" v-on:click="change_score('team_a', -1)" v-bind:class="{ invisible: team_a.score==0 }">-1
+                </button>
+                <button type="button" class="btn btn-primary btn-lg btn-huge" v-on:click="change_score('team_a', 1)">+1</button>
+            </div>
+            <div class="team_b">
+                <button type="button" class="btn btn-primary btn-lg btn-huge" v-on:click="change_score('team_b', 1)">+1</button>
+                <button type="button" class="btn btn-secondary" v-on:click="change_score('team_b', -1)" v-bind:class="{ invisible: team_b.score==0 }">-1
+                </button>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="next-set mt-3">
+            <button type="button"
+                    class="btn btn-warning btn-lg"
+                    v-bind:class="{ invisible: hide_next_set(), disabled: !is_set_finished() }"
+                    v-on:click="start_next_set()">
+                Nächster Satz
+            </button>
+        </div>
+
+        <div class=" names mt-3
         ">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Team links</span>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Team links</span>
+                </div>
+                <input type="text" class="form-control" v-model="team_a.name">
             </div>
-            <input type="text" class="form-control" v-model="team_a.name">
-        </div>
-        <div class="input-group mt-2">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Team rechts</span>
+            <div class="input-group mt-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Team rechts</span>
+                </div>
+                <input type="text" class="form-control" v-model="team_b.name">
             </div>
-            <input type="text" class="form-control" v-model="team_b.name">
         </div>
-    </div>
 
-    <div class="sets mt-3">
-        <div class="input-group mt-2" v-for="(set, index) in sets">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Satz {{ index+1 }}</span>
-            </div>
-            <input type="text" class="form-control" v-model="set.team_a">
-            <input type="text" class="form-control" v-model="set.team_b">
-            <div class="input-group-append">
-                <button class="btn btn-danger" type="button" v-on:click="delete_set(index)">Löschen</button>
+        <div class="sets mt-3">
+            <div class="input-group mt-2" v-for="(set, index) in sets">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Satz {{ index+1 }}</span>
+                </div>
+                <input type="text" class="form-control" v-model="set.team_a">
+                <input type="text" class="form-control" v-model="set.team_b">
+                <div class="input-group-append">
+                    <button class="btn btn-danger" type="button" v-on:click="delete_set(index)">Löschen</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="control-buttons mt-3">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-warning" v-on:click="switch_sides()">⇄ Seiten wechseln</button>
-            <button type="button" class="btn btn-danger" v-on:click="new_game()">Neues Spiel</button>
+        <div class="control-buttons mt-3">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-warning" v-on:click="switch_sides()">⇄ Seiten wechseln</button>
+                <button type="button" class="btn btn-danger" v-on:click="new_game()">Neues Spiel</button>
+            </div>
         </div>
     </div>
 
