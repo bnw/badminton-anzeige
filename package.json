@@ -10,11 +10,15 @@
     "sharedb": "^1.0.0-beta.8",
     "sharedb-mingo-memory": "^1.0.0",
     "ts-loader": "^4.3.0",
+    "ts-node": "^6.0.3",
     "typescript": "^2.8.3",
     "vue": "^2.5.16",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3",
     "websocket-json-stream": "0.0.3",
     "ws": "^5.1.1"
+  },
+  "scripts": {
+    "run": "webpack && ts-node src/server.ts"
   }
 }
