@@ -12,7 +12,7 @@ const share = ShareDB({db: new ShareDBMingoMemory()});
 
 // Create a WebSocket server
 const app = connect();
-app.use(serveStatic('.', {index: "viewer.html"}));
+app.use(serveStatic('.'));
 const server = http.createServer(app);
 const wss = new WebSocket.Server({server: server});
 
