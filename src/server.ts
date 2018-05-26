@@ -35,8 +35,8 @@ async function main() {
     };
     await doc.create({data: data});
 
-    console.log("Listening on http://localhost:8080");
-    server.listen(8080);
+    console.log("Listening on http://localhost:80");
+    server.listen(80);
 }
 
 main();
