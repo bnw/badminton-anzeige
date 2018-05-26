@@ -25,6 +25,6 @@ function ts_webpack_config(src, out) {
 }
 
 module.exports = [
-    ts_webpack_config('./src/viewer.ts', 'viewer.js'),
-    ts_webpack_config('./src/controller.ts', 'controller.js'),
+    ts_webpack_config('./src/viewer.ts', 'viewer.webpack.js'),
+    ts_webpack_config('./src/controller.ts', 'controller.webpack.js'),
 ];
