@@ -5,7 +5,7 @@ import * as serveStatic from "serve-static";
 import * as WebSocket from "ws";
 import * as ShareDBMingoMemory from "sharedb-mingo-memory";
 import * as WebSocketJSONStream from "websocket-json-stream";
-import {Data} from "./data";
+import {initial_data} from "./data";
 
 // Start ShareDB
 const share = ShareDB({db: new ShareDBMingoMemory()});
@@ -28,12 +28,7 @@ async function main() {
     const doc = connection.get('data', 'data');
     const err = await doc.fetch();
     if (err) throw err;
-    const data: Data = {
-        team_a: {score: 20, name: "Team A"},
-        team_b: {score: 5, name: "Team B"},
-        sets: [{team_a: 21, team_b: 12}, {team_a: 6, team_b: 21}]
-    };
-    await doc.create({data: data});
+    await doc.create({data: initial_data});
 
     console.log("Listening on http://localhost:80");
     server.listen(80);
