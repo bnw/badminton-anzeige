@@ -22,6 +22,8 @@ wss.on('connection', function (ws, req) {
     share.listen(stream);
 });
 
+const port = process.argv[2] || 80;
+
 // Create initial documents
 async function main() {
     const connection = share.connect();
@@ -30,8 +32,8 @@ async function main() {
     if (err) throw err;
     await doc.create({data: initial_data});
 
-    console.log("Listening on http://localhost:80");
-    server.listen(80);
+    console.log("Listening on http://localhost:" + port);
+    server.listen(port);
 }
 
 main();
