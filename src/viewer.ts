@@ -23,6 +23,7 @@ import {get_sharedb_connection} from "./websocket_connection";
         app.team_a = Object.assign({}, doc.data.data.team_a);
         app.team_b = Object.assign({}, doc.data.data.team_b);
         app.sets = Object.assign(doc.data.data.sets);
+        app.last_score =  doc.data.data.last_score;
         console.log(doc.data);
     }
 })();

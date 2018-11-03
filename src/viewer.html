@@ -25,24 +25,22 @@
 
     <div v-if="!is_loading">
         <div class="name">
-            <div class="team_a team">{{team_a.name}}</div>
-            <div class="team_b team">{{team_b.name}}</div>
+            <div class="team_a team">{{team_a.name}}</div><div class="team_b team"><span v-bind:class="{ hidden: team_a.name=='' }">&nbsp;:&nbsp;</span>{{team_b.name}}</div>
             <div class="clear"></div>
         </div>
-        <div class="score">
-            <div class="team_a team">{{team_a.score}}</div>
-            <div class="colon">:</div>
-            <div class="team_b team">{{team_b.score}}</div>
+        <div class="score_row team_a">
+            <div class="home_away">Heim:</div>
+            <div class="score_container" v-for="set in sets">
+                <div class="score" v-bind:class="{ highlight: set.team_a > set.team_b }">{{set.team_a}}</div>
+            </div><div class="score_container"><div class="score" v-bind:class="{ highlight: last_score=='team_a' }">{{team_a.score}}</div></div>
             <div class="clear"></div>
         </div>
-
-        <div class="sets">
-            <div class="set" v-for="set in sets">
-                <div class="team_a team">{{set.team_a}}</div>
-                <div class="colon">:</div>
-                <div class="team_b team">{{set.team_b}}</div>
-                <div class="clear"></div>
-            </div>
+        <div class="score_row team_b">
+            <div class="home_away">Gast:</div>
+            <div class="score_container" v-for="set in sets">
+                <div class="score" v-bind:class="{ highlight: set.team_a < set.team_b }">{{set.team_b}}</div>
+            </div><div class="score_container"><div class="score" v-bind:class="{ highlight: last_score=='team_b' }">{{team_b.score}}</div></div>
+            <div class="clear"></div>
         </div>
     </div>
 </div>

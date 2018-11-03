@@ -1,11 +1,10 @@
-body{
+body {
   color: white;
   background: black;
   font-family: Helvetica, sans-serif;
-  font-size: 20vw;
+  font-size: 14vw;
   overflow: hidden;
 }
-
 
 .clear {
   float: none;
@@ -13,47 +12,67 @@ body{
 }
 
 .name {
-  font-size:0.4em;
+  font-size: 0.4em;
 
   .team {
-    width: 50%;
+    width: 49%;
     float: left;
     overflow: hidden;
-   white-space: nowrap;
+    //text-overflow: ellipsis;
+    white-space: nowrap;
+
+    .hidden {
+      display: none;
+    }
   }
   .team_a {
+    text-align: right
   }
   .team_b {
-    text-align: right;
   }
 }
 
-.score, .set {
-  //margin: 0 auto;
-  text-align: center;
-  div:not(.clear) {
+.score_row {
+  margin-top: 0.5ex;
+  white-space: nowrap;
+  overflow: visible;
+  div {
     display: inline-block;
-    //float: left;
   }
 
-  .team{
-    min-width: 30%;
-
-  }
-
-  .team_a {
+  .home_away {
+    font-size: .9em;
+    width: 2.35em;
     text-align: right;
   }
 
-  .team_b {
-    text-align: left;
+  .score_container {
+    width: 1.5em;
+    text-align: right;
   }
-}
 
-.score{
-  margin-top: 0.1em;
-}
+  .score {
+    padding-left: 0.1em;
+    margin-top: 0.1em;
+    padding-right: 0.075em;
+  }
 
-.sets{
-  font-size:0.4em;
+  &.team_a {
+    color: #FF7F26;
+  }
+
+  &.team_b {
+    color: #23B14D;
+  }
+
+  &.team_a .highlight {
+    color: black;
+    background-color: #FF7F26;
+  }
+
+  &.team_b .highlight {
+    color: black;
+    background-color: #23B14D;
+  }
+
 }

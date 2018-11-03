@@ -14,6 +14,9 @@ import {get_sharedb_connection} from "./websocket_connection";
         methods: {
             change_score: function (team: string, change: 1 | -1) {
                 this[team].score = Math.max(0, this[team].score + change);
+                if(change === 1) {
+                    this.last_score = team;
+                }
             },
             hide_next_set: function () {
                 return this.sets.length >= 2;
@@ -29,6 +32,7 @@ import {get_sharedb_connection} from "./websocket_connection";
                 this.sets.push({team_a: this.team_a.score, team_b: this.team_b.score});
                 this.team_a.score = 0;
                 this.team_b.score = 0;
+                this.last_score = null;
             },
             switch_sides: function () {
                 const old_name_a = this.team_a.name;
@@ -37,6 +41,9 @@ import {get_sharedb_connection} from "./websocket_connection";
                 this.team_a.score = this.team_b.score;
                 this.team_b.name = old_name_a;
                 this.team_b.score = old_score_a;
+                if(this.last_score !== null) {
+                    this.last_score = this.last_score == "team_a" ? "team_b" : "team_a";
+                }
 
                 for (let set of this.sets) {
                     const old_score_a = set.team_a;
@@ -49,6 +56,7 @@ import {get_sharedb_connection} from "./websocket_connection";
                     this.sets.splice(0);
                     this.team_a.score = 0;
                     this.team_b.score = 0;
+                    this.last_score = null;
                 }
             }
         }
@@ -69,6 +77,7 @@ import {get_sharedb_connection} from "./websocket_connection";
         app.team_a = Object.assign({}, doc.data.data.team_a);
         app.team_b = Object.assign({}, doc.data.data.team_b);
         app.sets = doc.data.data.sets;
+        app.last_score = doc.data.data.last_score;
     }
 
     function raw_data(app: Vue) {
@@ -85,7 +94,8 @@ import {get_sharedb_connection} from "./websocket_connection";
                 score: app.team_b.score,
                 name: app.team_b.name
             },
-            sets: sets
+            sets: sets,
+            last_score: app.last_score
         }
     }
 
